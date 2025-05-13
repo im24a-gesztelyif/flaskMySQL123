@@ -6,8 +6,8 @@ def create_app():
     app = Flask(__name__)
 
     # Register Blueprints
-    app.register_blueprint(tasks.bp)
-    app.register_blueprint(users.bp)
-    app.register_blueprint(materials.bp)
+    app.register_blueprint(tasks.app)
+    app.register_blueprint(users.app)
+    app.register_blueprint(materials.app)
 
     return app

@@ -1,9 +1,10 @@
 from flask import Blueprint, jsonify
 from app.db import get_connection
 
-bp = Blueprint('tasks', __name__, url_prefix='/tasks')
+app = Blueprint('tasks', __name__)
+# bp = Blueprint('tasks', __name__, url_prefix='/tasks')
 
-@bp.route('/all', methods=['GET'])
+@app.route('/getTasks', methods=['GET'])
 def get_all_tasks():
     try:
         con = get_connection()
