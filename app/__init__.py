@@ -1,5 +1,5 @@
 from flask import Flask
-from app.routes import tasks, users, materials, category, progress, priority, files, TaskMaterial # import your routes
+from app.routes import main, tasks, users, materials, category, progress, priority, files, TaskMaterial # import your routes
 
 
 def create_app():
@@ -14,5 +14,6 @@ def create_app():
     app.register_blueprint(priority.app)
     app.register_blueprint(files.app)
     app.register_blueprint(TaskMaterial.app)
+    app.register_blueprint(main.app)
 
     return app
