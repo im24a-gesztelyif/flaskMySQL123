@@ -1,13 +1,14 @@
 from flask import Blueprint, jsonify
 from app.db import get_connection
 
-app = Blueprint('category', __name__, url_prefix='/category')
+app = Blueprint('category', __name__)
+
 
 @app.route('/getCategories', methods=['GET'])
 def get_all_categories():
     try:
-        connection = get_connection()
-        cursor = connection.cursor()
+        con = get_connection()
+        cursor = con.cursor()
         cursor.execute('SELECT * FROM Kategorie')
         categories = cursor.fetchall()
         cursor.close()

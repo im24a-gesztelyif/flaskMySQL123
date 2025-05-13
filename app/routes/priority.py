@@ -3,14 +3,15 @@ from app.db import get_connection
 
 app = Blueprint('priority', __name__)
 
-@app.route('getPriorities', methods=['GET'])
+
+@app.route('/getPriorities', methods=['GET'])
 def get_all_priorities():
     try:
-        connection = get_connection()
-        cursor = connection.cursor()
+        con = get_connection()
+        cursor = con.cursor()
         cursor.execute('SELECT * FROM Prioritaet')
-        cursor.fetchall()
+        priority = cursor.fetchall()
         cursor.close()
-        return jsonify(cursor.fetchall()), 200
+        return jsonify(priority), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
