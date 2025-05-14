@@ -1,7 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, send_from_directory
 
 app = Blueprint('main', __name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    return 'Taskplaner API Home'
+@app.route('/')
+def serve_frontend():
+    return send_from_directory('frontend', 'index.html')
