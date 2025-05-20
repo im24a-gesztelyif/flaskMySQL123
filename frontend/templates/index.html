@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Task Planner</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <h1>Task Planner</h1>
@@ -27,8 +27,8 @@
     </form>
 
   <h2>All Tasks</h2>
-  <ul id="task-list"></ul>
+  <ul id="{{ url_for('static', filename='script.js') }}"></ul>
 
-  <script src="script.js"></script>
+  <script src=""></script>
 </body>
 </html>
