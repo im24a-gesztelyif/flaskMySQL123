@@ -17,6 +17,10 @@ def serve_static_files(filename):
     return send_from_directory('frontend', filename)
 """
 
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory('frontend', path)
+
 if __name__ == '__main__':
     print("Starting Flask app...")
     print("Flask Server is running on app.py")

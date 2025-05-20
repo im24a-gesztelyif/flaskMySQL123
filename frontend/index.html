@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Task Planner</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Task Planner</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Task Planner</h1>
-    <div id="priorities"></div>
-    <script src="app.js"></script>
+  <h1>Task Planner</h1>
+
+  <h2>Create Task</h2>
+    <form id="taskForm">
+        <input type="text" id="titel" placeholder="Titel" required />
+        <input type="datetime-local" id="beginn" required />
+        <input type="datetime-local" id="ende" />
+        <input type="text" id="ort" />
+        <input type="text" id="koordinaten" />
+
+        <textarea id="notiz"></textarea>
+
+        <input type="number" id="kategorie_id" required />
+        <input type="number" id="prioritaet_id" required />
+        <input type="number" id="fortschritt_id" required />
+        <input type="number" id="benutzer_id" required />
+        
+        <button type="submit">Create Task</button>
+    </form>
+
+  <h2>All Tasks</h2>
+  <ul id="task-list"></ul>
+
+  <script src="script.js"></script>
 </body>
 </html>
