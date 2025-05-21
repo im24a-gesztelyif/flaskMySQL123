@@ -9,26 +9,26 @@
   <h1>Task Planner</h1>
 
   <h2>Create Task</h2>
-    <form id="taskForm">
-        <input type="text" id="titel" placeholder="Titel" required />
-        <input type="datetime-local" id="beginn" required />
-        <input type="datetime-local" id="ende" />
-        <input type="text" id="ort" />
-        <input type="text" id="koordinaten" />
+  <form id="taskForm">
+      <input type="text" id="titel" placeholder="Titel" required />
+      <input type="datetime-local" id="beginn" required />
+      <input type="datetime-local" id="ende" />
+      <input type="text" id="ort" />
+      <input type="text" id="koordinaten" />
 
-        <textarea id="notiz"></textarea>
+      <textarea id="notiz"></textarea>
 
-        <input type="number" id="kategorie_id" required />
-        <input type="number" id="prioritaet_id" required />
-        <input type="number" id="fortschritt_id" required />
-        <input type="number" id="benutzer_id" required />
-        
-        <button type="submit">Create Task</button>
-    </form>
+      <input type="number" id="kategorie_id" required />
+      <input type="number" id="prioritaet_id" required />
+      <input type="number" id="fortschritt_id" required />
+      <input type="number" id="benutzer_id" required />
+      
+      <button type="submit">Create Task</button>
+  </form>
 
   <h2>All Tasks</h2>
-  <ul id="{{ url_for('static', filename='script.js') }}"></ul>
+  <ul id="taskList"></ul>
 
-  <script src=""></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

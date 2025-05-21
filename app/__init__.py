@@ -1,11 +1,18 @@
 from flask import Flask
-from app.routes import main, tasks, users, materials, category, progress, priority, files, TaskMaterial # import your routes
-
+import os
 
 def create_app():
-    app = Flask(__name__)
+    # Define the absolute path to your frontend folder
+    frontend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
+
+    app = Flask(
+        __name__,
+        template_folder=os.path.join(frontend_path, 'templates'),
+        static_folder=os.path.join(frontend_path, 'static')
+    )
 
     # Register Blueprints
+    from app.routes import main, tasks, users, materials, category, progress, priority, files, TaskMaterial
     app.register_blueprint(tasks.app)
     app.register_blueprint(users.app)
     app.register_blueprint(materials.app)
