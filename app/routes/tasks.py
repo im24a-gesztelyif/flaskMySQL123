@@ -20,6 +20,7 @@ def get_tasks():
 @app.route('/tasks', methods=['POST'])
 def add_task():
     data = request.get_json()
+    print("Received task:", data)
     try:
         con = get_connection()
         cursor = con.cursor()

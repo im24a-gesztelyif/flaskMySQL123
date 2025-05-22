@@ -10,17 +10,34 @@
 
   <h2>Create Task</h2>
   <form id="taskForm">
-      <input type="text" id="titel" placeholder="Titel" required />
+      <label for="titel">Titel: </label>
+      <input type="text" id="titel" required />
+
+      <label for="beginn">Beginn: </label>
       <input type="datetime-local" id="beginn" required />
-      <input type="datetime-local" id="ende" />
-      <input type="text" id="ort" />
-      <input type="text" id="koordinaten" />
 
+      <label for="ende">Ende: </label>
+      <input type="datetime-local" id="ende" required/>
+
+      <label for="ort">Ort: </label>
+      <input type="text" id="ort" required/>
+      
+      <label for="koordinaten">Koordinaten: </label>
+      <input type="text" id="koordinaten" required/>
+      
+      <label for="notiz">Notizen: </label>
       <textarea id="notiz"></textarea>
-
+      
+      <label for="kategorie_id">Kategorie ID: </label>
       <input type="number" id="kategorie_id" required />
+      
+      <label for="prioritaet_id">Priorität ID: </label>
       <input type="number" id="prioritaet_id" required />
+      
+      <label for="fortschritt_id">Fortschritt ID: </label>
       <input type="number" id="fortschritt_id" required />
+      
+      <label for="benutzer_id">Benutzer ID</label>
       <input type="number" id="benutzer_id" required />
       
       <button type="submit">Create Task</button>
