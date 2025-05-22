@@ -1,8 +1,13 @@
 import os
-from flask import Blueprint, send_from_directory
+from flask import Blueprint, render_template
 
 app = Blueprint('main', __name__)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+"""
 @app.route('/')
 def serve_frontend():
     # Get the directory where this script is located
@@ -17,3 +22,4 @@ def serve_static(filename):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     static_path = os.path.abspath(os.path.join(current_dir, '..', '..', 'frontend', 'static'))
     return send_from_directory(static_path, filename)
+    """
