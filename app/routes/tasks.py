@@ -59,3 +59,42 @@ def delete_task(id):
         return jsonify({"message": "Task deleted"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+# PUT update a task
+@app.route('/tasks/<int:id>', methods=['PUT'])
+def update_task(id):
+    data = request.get_json()
+    try:
+        con = get_connection()
+        cursor = con.cursor()
+        cursor.execute("""
+            UPDATE Aufgabe
+            SET Titel = %s,
+                Beginn = %s,
+                Ende = %s,
+                Ort = %s,
+                Koordinaten = %s,
+                Notiz = %s,
+                KategorieID = %s,
+                PrioritaetID = %s,
+                FortschrittID = %s,
+                BenutzerID = %s
+            WHERE AufgabeID = %s
+        """, (
+            data['titel'],
+            data['beginn'],
+            data.get('ende'),
+            data.get('ort'),
+            data.get('koordinaten'),
+            data.get('notiz'),
+            data['kategorie_id'],
+            data['prioritaet_id'],
+            data['fortschritt_id'],
+            data['benutzer_id'],
+            id
+        ))
+        con.commit()
+        cursor.close()
+        return jsonify({"message": "Task updated"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
