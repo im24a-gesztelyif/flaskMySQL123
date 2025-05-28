@@ -1,5 +1,8 @@
 from flask import Flask
+from flask_wtf import CSRFProtect
 import os
+
+csrf = CSRFProtect()
 
 def create_app():
     app = Flask(__name__, 
@@ -7,6 +10,7 @@ def create_app():
                 static_folder='static')
 
     app.secret_key = os.urandom(24)
+    csrf.init_app(app)
 
     # Register Blueprints
     from app.routes import (main, tasks, users, materials, category, 
@@ -23,4 +27,5 @@ def create_app():
     app.register_blueprint(TaskMaterial.app)
     app.register_blueprint(main.app)
     app.register_blueprint(login.app)
+
     return app
