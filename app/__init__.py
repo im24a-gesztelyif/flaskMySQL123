@@ -1,10 +1,18 @@
 from flask import Flask
+import os
 
 def create_app():
-    app = Flask(__name__, template_folder='templates', static_folder='static')
+    app = Flask(__name__, 
+                template_folder='templates', 
+                static_folder='static')
+
+    app.secret_key = os.urandom(24)
 
     # Register Blueprints
-    from app.routes import main, tasks, users, materials, category, progress, priority, files, TaskMaterial
+    from app.routes import (main, tasks, users, materials, category, 
+                            progress, priority, files, TaskMaterial, 
+                            login)
+    
     app.register_blueprint(tasks.app)
     app.register_blueprint(users.app)
     app.register_blueprint(materials.app)
@@ -14,5 +22,5 @@ def create_app():
     app.register_blueprint(files.app)
     app.register_blueprint(TaskMaterial.app)
     app.register_blueprint(main.app)
-
+    app.register_blueprint(login.app)
     return app

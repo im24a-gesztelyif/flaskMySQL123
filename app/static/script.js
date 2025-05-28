@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskList = document.getElementById('taskList');
     const submitButton = taskForm.querySelector('button[type="submit"]');
     let editingTaskId = null;
+    const userId = parseInt(localStorage.getItem('user_id'));
 
     // Create Cancel Editing button
     const cancelButton = document.getElementById('cancelButton');
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('kategorie_id').value = task.KategorieID;
                 document.getElementById('prioritaet_id').value = task.PrioritaetID;
                 document.getElementById('fortschritt_id').value = task.FortschrittID;
-                document.getElementById('benutzer_id').value = task.BenutzerID;
+                document.getElementById('benutzer_id').value = userId;
 
                 editingTaskId = task.AufgabeID;
                 submitButton.textContent = "Update Task";
