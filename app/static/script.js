@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const taskForm = document.getElementById('taskForm');
     const taskList = document.getElementById('taskList');
     const submitButton = taskForm.querySelector('button[type="submit"]');
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     taskForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
+        
         const taskData = {
             titel: document.getElementById('titel').value,
             beginn: document.getElementById('beginn').value,
@@ -78,7 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // EDIT mode → PUT
             await fetch(`/tasks/${editingTaskId}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
                 body: JSON.stringify(taskData)
             });
             editingTaskId = null;
@@ -88,7 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // CREATE mode → POST
             await fetch('/tasks', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
                 body: JSON.stringify(taskData)
             });
         }
