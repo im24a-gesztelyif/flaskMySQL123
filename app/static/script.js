@@ -30,7 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
             li.querySelector('.deleteBtn').addEventListener('click', async () => {
                 if (!confirm("Are you sure you want to delete this task?")) return;
 
-                await fetch(`/tasks/${task.AufgabeID}`, { method: 'DELETE' });
+                await fetch(`/tasks/${task.AufgabeID}`, { 
+                    method: 'DELETE',
+                    headers: {'X-CSRFToken': csrfToken}
+                });
                 fetchTasks();
             });
 
