@@ -62,7 +62,7 @@ CREATE TABLE Fortschritt(
 CREATE TABLE Benutzer(
 	BenutzerID int primary key not null auto_increment,
     BenutzerName varchar(100) not null,
-    BenutzerPWD varchar(100) not null
+    BenutzerPWD varchar(300) not null
 );
 
 
@@ -130,7 +130,7 @@ INSERT INTO Material (Material) VALUES (('Fachbuch'));
 
 INSERT INTO Kategorie (Kategorie) VALUES (('Hausaufgaben'));
 INSERT INTO Kategorie (Kategorie) VALUES (('Prüfungsvorbereitung'));
-INSERT INTO Kategorie (Kategorie) VALUES (('Exkurion'));
+INSERT INTO Kategorie (Kategorie) VALUES (('Exkursion'));
 INSERT INTO Kategorie (Kategorie) VALUES (('Freiwilliges Lernen'));
 INSERT INTO Kategorie (Kategorie) VALUES (('Einkaufen'));
 INSERT INTO Kategorie (Kategorie) VALUES (('Freizeit'));
@@ -158,10 +158,6 @@ INSERT INTO Fortschritt (Fortschritt) VALUES (('100%'));
 -- TEST DATEN
 -- ********************************************************************************************************
 -- ********************************************************************************************************
-
-INSERT INTO Benutzer (BenutzerID, BenutzerName, BenutzerPWD)
-VALUES (1, 'max', 'admin');
-
 
 -- ********************************************************************************************************
 -- ********************************************************************************************************

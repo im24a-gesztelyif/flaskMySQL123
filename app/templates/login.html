@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Login</h1>
@@ -10,11 +12,10 @@
     {% endif %}
     <form method="POST">
         {{ form.hidden_tag() }}
-        {{ form.username.label }}<br>
-        {{ form.username() }}<br><br>
-        {{ form.password.label }}<br>
-        {{ form.password() }}<br><br>
-        {{ form.submit() }}
-    </form>
+        <p>{{ form.username.label }} {{ form.username() }}</p>
+        <p>{{ form.password.label }} {{ form.password() }}</p>
+        <p>{{ form.submit() }}</p>
+    </form><br>
+    <a href="/register">Registrieren</a>
 </body>
 </html>
