@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <h3>${task.Titel}</h3>
                 <div class="task-detail"><strong>Beginn:</strong> ${new Date(task.Beginn).toLocaleString()}</div>
-                <div class="task-detail"><strong>Ende:</strong> ${task.Ende ? new Date(task.Ende).toLocaleString() : '///'}</div>
+                <div class="task-detail"><strong>Ende:</strong> ${task.Ende ? new Date(task.Ende).toLocaleString() : '—'}</div>
                 <div class="task-detail"><strong>Ort:</strong> ${task.Ort || '—'}</div>
                 <div class="task-detail"><strong>Koordinaten:</strong> ${task.Koordinaten || '—'}</div>
                 <div class="task-detail"><strong>Notiz:</strong> ${task.Notiz || '—'}</div>
