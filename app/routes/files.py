@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify
 from app.db import get_connection
 
 app = Blueprint('files', __name__)
-#bp = Blueprint('materials', __name__, url_prefix='/materials')
 
 @app.route('/getFiles', methods=['GET'])
 def get_all_materials():

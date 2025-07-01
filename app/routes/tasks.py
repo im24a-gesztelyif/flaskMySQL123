@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 from app.db import get_connection
 
 app = Blueprint('tasks', __name__)
@@ -6,10 +6,14 @@ app = Blueprint('tasks', __name__)
 # GET all tasks
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
+    if 'user_id' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
     try:
         con = get_connection()
         cursor = con.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM Aufgabe")
+        user_id = session.get('user_id')
+        cursor.execute("SELECT * FROM Aufgabe WHERE BenutzerID = %s", (user_id,))
         tasks = cursor.fetchall()
         cursor.close()
         return jsonify(tasks), 200
@@ -19,6 +23,9 @@ def get_tasks():
 # POST create a new task
 @app.route('/tasks', methods=['POST'])
 def add_task():
+    if 'user_id' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
     data = request.get_json()
     print("Received task:", data)
     try:
@@ -39,7 +46,7 @@ def add_task():
             data['kategorie_id'],
             data['prioritaet_id'],
             data['fortschritt_id'],
-            data['benutzer_id']
+            session['user_id'] # automatically taken from the session
         ))
         con.commit()
         cursor.close()
@@ -53,7 +60,12 @@ def delete_task(id):
     try:
         con = get_connection()
         cursor = con.cursor()
-        cursor.execute("DELETE FROM Aufgabe WHERE AufgabeID = %s", (id,))
+        cursor.execute("SELECT * FROM Aufgabe WHERE AufgabeID = %s AND BenutzerID = %s", (id, session['user_id']))
+        task = cursor.fetchone()
+        if not task:
+            return "Unauthorized", 403
+        
+        cursor.execute("DELETE FROM Aufgabe WHERE AufgabeID = %s AND BenutzerID = %s", (id, session['user_id']))
         con.commit()
         cursor.close()
         return jsonify({"message": "Task deleted"}), 200
@@ -63,7 +75,11 @@ def delete_task(id):
 # PUT update a task
 @app.route('/tasks/<int:id>', methods=['PUT'])
 def update_task(id):
+    if 'user_id' not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+
     data = request.get_json()
+    benutzer_id = session['user_id']
     try:
         con = get_connection()
         cursor = con.cursor()
@@ -79,7 +95,7 @@ def update_task(id):
                 PrioritaetID = %s,
                 FortschrittID = %s,
                 BenutzerID = %s
-            WHERE AufgabeID = %s
+            WHERE AufgabeID = %s AND BenutzerID = %s
         """, (
             data['titel'],
             data['beginn'],
@@ -90,8 +106,9 @@ def update_task(id):
             data['kategorie_id'],
             data['prioritaet_id'],
             data['fortschritt_id'],
-            data['benutzer_id'],
-            id
+            benutzer_id,
+            id,
+            benutzer_id # automatically taken from the session
         ))
         con.commit()
         cursor.close()

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from flask_wtf import CSRFProtect
 import os
 
@@ -8,6 +8,10 @@ def create_app():
     app = Flask(__name__, 
                 template_folder='templates', 
                 static_folder='static')
+    
+    @app.context_processor
+    def inject_user():
+        return dict(username=session.get('username'))
 
     app.secret_key = os.urandom(24)
     csrf.init_app(app)

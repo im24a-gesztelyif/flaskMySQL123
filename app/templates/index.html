@@ -7,43 +7,55 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>Task Planner</h1>
+  <div style="position: absolute; top: 10px; right: 10px;">
+    <div>
+        👤 {{ username }}
+        <a href="/logout">Logout</a>
+    </div>
+  </div>
 
-  <h2>Create Task</h2>
-  <form id="taskForm">
-      <label for="titel">Titel: </label>
-      <input type="text" id="titel" required />
+  <h1>Taskplaner</h1>
 
-      <label for="beginn">Beginn: </label>
-      <input type="datetime-local" id="beginn" required />
+  <button id="openModalBtn">Create New Task</button>
 
-      <label for="ende">Ende: </label>
-      <input type="datetime-local" id="ende" required/>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2>Create Task</h2>
+      <form id="taskForm">
+          <label for="titel">Titel: </label>
+          <input type="text" id="titel" required />
 
-      <label for="ort">Ort: </label>
-      <input type="text" id="ort" required/>
-      
-      <label for="koordinaten">Koordinaten: </label>
-      <input type="text" id="koordinaten" required/>
-      
-      <label for="notiz">Notizen: </label>
-      <textarea id="notiz"></textarea>
-      
-      <label for="kategorie_id">Kategorie ID: </label>
-      <input type="number" id="kategorie_id" required />
-      
-      <label for="prioritaet_id">Priorität ID: </label>
-      <input type="number" id="prioritaet_id" required />
-      
-      <label for="fortschritt_id">Fortschritt ID: </label>
-      <input type="number" id="fortschritt_id" required />
-      
-      <label for="benutzer_id">Benutzer ID</label>
-      <input type="number" id="benutzer_id" required />
-      
-      <button type="submit">Create Task</button>
-      <button type="button" id="cancelButton" style="display: none;">Cancel Editing</button>
-  </form>
+          <label for="beginn">Beginn: </label>
+          <input type="datetime-local" id="beginn" required />
+
+          <label for="ende">Ende: </label>
+          <input type="datetime-local" id="ende" required/>
+
+          <label for="ort">Ort: </label>
+          <input type="text" id="ort" required/>
+          
+          <label for="koordinaten">Koordinaten: </label>
+          <input type="text" id="koordinaten" required/>
+          
+          <label for="notiz">Notizen: </label>
+          <textarea id="notiz"></textarea>
+          
+          <label for="kategorie_id">Kategorie ID: </label>
+          <input type="number" id="kategorie_id" required />
+          
+          <label for="prioritaet_id">Priorität ID: </label>
+          <input type="number" id="prioritaet_id" required />
+          
+          <label for="fortschritt_id">Fortschritt ID: </label>
+          <input type="number" id="fortschritt_id" required />
+          
+          
+          <button type="submit">Create Task</button>
+          <button type="button" id="cancelButton" style="display: none;">Cancel Editing</button>
+      </form>
+    </div>
+  </div>
 
   <h2>All Existing Tasks</h2>
   <ul id="taskList"></ul>

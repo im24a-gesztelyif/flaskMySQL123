@@ -4,7 +4,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskList = document.getElementById('taskList');
     const submitButton = taskForm.querySelector('button[type="submit"]');
     let editingTaskId = null;
-    const userId = parseInt(localStorage.getItem('user_id'));
+    const modal = document.getElementById('modal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeBtn = document.querySelector('.close-button');
+
+    // "Create New Task" button → opens modal window
+    openModalBtn.addEventListener('click', () => {
+        modal.style.display = 'block';
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        resetForm();
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            resetForm();
+        }
+    });
+
+    function resetForm() {
+        taskForm.reset();
+        modal.style.display = 'none';
+        editingTaskId = null;
+        submitButton.textContent = "Create Task";
+        cancelButton.style.display = "none";
+    }
 
     // Create Cancel Editing button
     const cancelButton = document.getElementById('cancelButton');
@@ -51,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('kategorie_id').value = task.KategorieID;
                 document.getElementById('prioritaet_id').value = task.PrioritaetID;
                 document.getElementById('fortschritt_id').value = task.FortschrittID;
-                document.getElementById('benutzer_id').value = userId;
 
+                modal.style.display = 'block'; // ← open modal
                 editingTaskId = task.AufgabeID;
                 submitButton.textContent = "Update Task";
                 cancelButton.style.display = "inline-block";
@@ -74,8 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             notiz: document.getElementById('notiz').value,
             kategorie_id: parseInt(document.getElementById('kategorie_id').value),
             prioritaet_id: parseInt(document.getElementById('prioritaet_id').value),
-            fortschritt_id: parseInt(document.getElementById('fortschritt_id').value),
-            benutzer_id: parseInt(document.getElementById('benutzer_id').value),
+            fortschritt_id: parseInt(document.getElementById('fortschritt_id').value)
         };
 
         if (editingTaskId) {
@@ -104,12 +130,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         taskForm.reset();
+        modal.style.display = 'none';
         fetchTasks();
     });
 
     // Cancel editing button logic
     cancelButton.addEventListener('click', () => {
         taskForm.reset();
+        modal.style.display = 'none';
         editingTaskId = null;
         submitButton.textContent = "Create Task";
         cancelButton.style.display = "none";

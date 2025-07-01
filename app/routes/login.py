@@ -61,3 +61,9 @@ def register():
         return redirect('/')  # Go to login page after registration
 
     return render_template('register.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
