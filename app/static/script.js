@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tasks.forEach(task => {
             const li = document.createElement('li');
             li.innerHTML = `
-                ${task.Titel} (${new Date(task.Beginn).toUTCString()} → ${new Date(task.Ende).toUTCString()}) 
+                ${task.Titel} (${new Date(task.Beginn).toUTCString()} → ${task.Ende ? new Date(task.Ende).toUTCString() : '///'}) 
                 <button class="editBtn">Edit</button> 
                 <button class="deleteBtn">Delete</button>
                 `;
@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Fill form with task data
                 document.getElementById('titel').value = task.Titel;
 
-                document.getElementById('beginn').value = new Date(task.Beginn).toISOString().slice(0, 16);
-                document.getElementById('ende').value = new Date(task.Ende).toISOString().slice(0, 16);
+                document.getElementById('beginn').value = task.Beginn ? new Date(task.Beginn).toISOString().slice(0, 16) : '';
+                document.getElementById('ende').value = task.Ende ? new Date(task.Ende).toISOString().slice(0, 16) : '';
                 
                 document.getElementById('ort').value = task.Ort;
                 document.getElementById('koordinaten').value = task.Koordinaten;
@@ -93,12 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         
         const taskData = {
-            titel: document.getElementById('titel').value,
+            titel: document.getElementById('titel').value.trim(),
             beginn: document.getElementById('beginn').value,
-            ende: document.getElementById('ende').value,
-            ort: document.getElementById('ort').value,
-            koordinaten: document.getElementById('koordinaten').value,
-            notiz: document.getElementById('notiz').value,
+            ende: document.getElementById('ende').value || null,
+            ort: document.getElementById('ort').value.trim() || null,
+            koordinaten: document.getElementById('koordinaten').value.trim() || null,
+            notiz: document.getElementById('notiz').value.trim() || null,
             kategorie_id: parseInt(document.getElementById('kategorie_id').value),
             prioritaet_id: parseInt(document.getElementById('prioritaet_id').value),
             fortschritt_id: parseInt(document.getElementById('fortschritt_id').value)
