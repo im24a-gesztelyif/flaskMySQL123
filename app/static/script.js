@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const taskForm = document.getElementById('taskForm');
-    const taskList = document.getElementById('taskList');
+    const taskContainer = document.getElementById('taskContainer');
     const submitButton = taskForm.querySelector('button[type="submit"]');
     let editingTaskId = null;
     const modal = document.getElementById('modal');
@@ -43,18 +43,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchTasks = async () => {
         const res = await fetch('/tasks');
         const tasks = await res.json();
-        taskList.innerHTML = '';
+        taskContainer.innerHTML = '';
 
         tasks.forEach(task => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                ${task.Titel} (${new Date(task.Beginn).toUTCString()} → ${task.Ende ? new Date(task.Ende).toUTCString() : '///'}) 
+            const card = document.createElement('div');
+            card.className = 'task-card';
+
+            card.innerHTML = `
+                <h3>${task.Titel}</h3>
+                <div class="task-detail"><strong>Beginn:</strong> ${new Date(task.Beginn).toLocaleString()}</div>
+                <div class="task-detail"><strong>Ende:</strong> ${task.Ende ? new Date(task.Ende).toLocaleString() : '///'}</div>
+                <div class="task-detail"><strong>Ort:</strong> ${task.Ort || '—'}</div>
+                <div class="task-detail"><strong>Koordinaten:</strong> ${task.Koordinaten || '—'}</div>
+                <div class="task-detail"><strong>Notiz:</strong> ${task.Notiz || '—'}</div>
+                <div class="task-detail"><strong>KategorieID:</strong> ${task.KategorieID}</div>
+                <div class="task-detail"><strong>PrioritätID:</strong> ${task.PrioritaetID}</div>
+                <div class="task-detail"><strong>FortschrittID:</strong> ${task.FortschrittID}</div>
                 <button class="editBtn">Edit</button> 
                 <button class="deleteBtn">Delete</button>
-                `;
+            `;
             
             // Delete button
-            li.querySelector('.deleteBtn').addEventListener('click', async () => {
+            card.querySelector('.deleteBtn').addEventListener('click', async () => {
                 if (!confirm("Are you sure you want to delete this task?")) return;
 
                 await fetch(`/tasks/${task.AufgabeID}`, { 
@@ -65,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Edit button
-            li.querySelector('.editBtn').addEventListener('click', () => {
+            card.querySelector('.editBtn').addEventListener('click', () => {
                 // Fill form with task data
                 document.getElementById('titel').value = task.Titel;
 
@@ -85,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 cancelButton.style.display = "inline-block";
             });
 
-            taskList.appendChild(li);
+            taskContainer.appendChild(card);
         });
     };
 
