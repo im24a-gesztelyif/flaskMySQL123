@@ -41,14 +41,26 @@
           <label for="notiz">Notizen: </label>
           <textarea id="notiz"></textarea>
           
-          <label for="kategorie_id">Kategorie ID: </label>
-          <input type="number" id="kategorie_id" required />
+          <label for="kategorie_id">Kategorie: </label>
+          <select id="kategorie_id" name="kategorie_id" required>
+            {% for k in kategorien %}
+              <option value="{{ k.KategorieID }}">{{ k.Kategorie }}</option>
+            {% endfor %}
+          </select><br>
           
-          <label for="prioritaet_id">Priorität ID: </label>
-          <input type="number" id="prioritaet_id" required />
+          <label for="prioritaet_id">Priorität: </label>
+          <select id="prioritaet_id" name="prioritaet_id" required>
+            {% for p in prioritaeten %}
+              <option value="{{ p.PrioritaetID }}">{{ p.Prioritaet }}</option>
+            {% endfor %}
+          </select><br>
           
-          <label for="fortschritt_id">Fortschritt ID: </label>
-          <input type="number" id="fortschritt_id" required />
+          <label for="fortschritt_id">Fortschritt: </label>
+          <select id="fortschritt_id" name="fortschritt_id" required>
+            {% for f in fortschritte %}
+              <option value="{{ f.FortschrittID }}">{{ f.Fortschritt }}</option>
+            {% endfor %}
+          </select><br><br>
           
           
           <button type="submit">Create Task</button>
