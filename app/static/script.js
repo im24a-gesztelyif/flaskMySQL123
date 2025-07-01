@@ -7,6 +7,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('modal');
     const openModalBtn = document.getElementById('openModalBtn');
     const closeBtn = document.querySelector('.close-button');
+    const slider = document.getElementById('fortschritt_slider');
+    const label = document.getElementById('fortschritt_label');
+    const fortschrittIdField = document.getElementById('fortschritt_id');
+
+    // Convert slider value (e.g., 40) to FortschrittID (e.g., 5)
+    function getFortschrittIDFromValue(value) {
+        return Math.floor(value / 10) + 1;
+    }
+
+    // Convert FortschrittID (e.g., 5) to slider value (e.g., 40)
+    function getSliderValueFromFortschrittID(id) {
+        return (id - 1) * 10;
+    }
+
+    // Sync Fortschritt slider with label and hidden field
+    function updateFortschrittFields() {
+        const value = parseInt(slider.value);
+        label.textContent = `${value}%`;
+        fortschrittIdField.value = getFortschrittIDFromValue(value);
+    }
+
+    // Initial sync
+    updateFortschrittFields();
+
+    slider.addEventListener('input', updateFortschrittFields);
 
     // "Create New Task" button → opens modal window
     openModalBtn.addEventListener('click', () => {
@@ -56,9 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="task-detail"><strong>Ort:</strong> ${task.Ort || '—'}</div>
                 <div class="task-detail"><strong>Koordinaten:</strong> ${task.Koordinaten || '—'}</div>
                 <div class="task-detail"><strong>Notiz:</strong> ${task.Notiz || '—'}</div>
-                <div class="task-detail"><strong>KategorieID:</strong> ${task.KategorieID}</div>
-                <div class="task-detail"><strong>PrioritätID:</strong> ${task.PrioritaetID}</div>
-                <div class="task-detail"><strong>FortschrittID:</strong> ${task.FortschrittID}</div>
+                <div class="task-detail"><strong>Kategorie:</strong> ${task.Kategorie}</div>
+                <div class="task-detail"><strong>Priorität:</strong> ${task.Prioritaet}</div>
+                <div class="task-detail"><strong>Fortschritt:</strong> ${task.Fortschritt}</div>
                 <button class="editBtn">Edit</button> 
                 <button class="deleteBtn">Delete</button>
             `;
@@ -87,7 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('notiz').value = task.Notiz || '';
                 document.getElementById('kategorie_id').value = task.KategorieID;
                 document.getElementById('prioritaet_id').value = task.PrioritaetID;
-                document.getElementById('fortschritt_id').value = task.FortschrittID;
+                const fortschrittValue = getSliderValueFromFortschrittID(task.FortschrittID);
+                slider.value = fortschrittValue;
+                updateFortschrittFields(); // updates both label and hidden input
 
                 modal.style.display = 'block'; // ← open modal
                 editingTaskId = task.AufgabeID;

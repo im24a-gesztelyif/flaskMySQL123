@@ -55,12 +55,9 @@
             {% endfor %}
           </select><br>
           
-          <label for="fortschritt_id">Fortschritt: </label>
-          <select id="fortschritt_id" name="fortschritt_id" required>
-            {% for f in fortschritte %}
-              <option value="{{ f.FortschrittID }}">{{ f.Fortschritt }}</option>
-            {% endfor %}
-          </select><br><br>
+          <label for="fortschritt_slider">Fortschritt: <span id="fortschritt_label">0%</span></label>
+          <input type="range" id="fortschritt_slider" min="0" max="100" step="10" value="0">
+          <input type="hidden" id="fortschritt_id" name="fortschritt_id">
           
           
           <button type="submit">Create Task</button>

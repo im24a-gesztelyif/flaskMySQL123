@@ -13,7 +13,27 @@ def get_tasks():
         con = get_connection()
         cursor = con.cursor(dictionary=True)
         user_id = session.get('user_id')
-        cursor.execute("SELECT * FROM Aufgabe WHERE BenutzerID = %s", (user_id,))
+        cursor.execute("""
+                    SELECT 
+                        a.AufgabeID,
+                        a.Titel,
+                        a.Beginn,
+                        a.Ende,
+                        a.Ort,
+                        a.Koordinaten,
+                        a.Notiz,
+                        a.KategorieID,
+                        k.Kategorie AS Kategorie,
+                        a.PrioritaetID,
+                        p.Prioritaet AS Prioritaet,
+                        a.FortschrittID,
+                        f.Fortschritt AS Fortschritt
+                    FROM Aufgabe a
+                    JOIN Kategorie k ON a.KategorieID = k.KategorieID
+                    JOIN Prioritaet p ON a.PrioritaetID = p.PrioritaetID
+                    JOIN Fortschritt f ON a.FortschrittID = f.FortschrittID
+                    WHERE BenutzerID = %s
+                       """, (user_id,))
         tasks = cursor.fetchall()
         cursor.close()
         return jsonify(tasks), 200
